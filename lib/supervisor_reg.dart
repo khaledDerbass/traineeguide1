@@ -10,6 +10,7 @@ class mySupervisor extends StatefulWidget
 }
 
 class _mySupervisorState extends State<mySupervisor> {
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -31,10 +32,10 @@ class _mySupervisorState extends State<mySupervisor> {
               },
               child: Icon(
                 Icons.arrow_back_ios_rounded,
-                color: Colors.black,
+                color: Colors.black45,
               ),
             )),
-        backgroundColor: Colors.transparent,
+       backgroundColor: Colors.transparent,
           body: Stack(
           children: [
             Row(

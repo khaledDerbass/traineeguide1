@@ -33,7 +33,7 @@ class _myLoginState extends State<myLogin> {
                       top: 60.0,
                     ),
                     child: Text(
-                      'Attendance Guide\n\n LOGIN',
+                      'Trainee Guide\n\n LOGIN',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
@@ -94,7 +94,7 @@ class _myLoginState extends State<myLogin> {
                                 shape: StadiumBorder(),
                               ),
                               onPressed: () {
-                                Navigator.pushNamed(context, 'student');
+                                Navigator.pushNamed(context, 'student1');
                               },
                               child: Row(
                                 mainAxisAlignment:

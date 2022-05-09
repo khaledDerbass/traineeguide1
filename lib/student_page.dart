@@ -1,6 +1,5 @@
 //import 'dart.html';
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 //import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -25,7 +24,19 @@ class _myStudentState extends State<myStudent> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+            elevation: null,
+            backgroundColor: Colors.transparent,
+            leading: TextButton(
+              onPressed: () {
+                Navigator.pushNamed(context, 'student1');
+              },
+              child: Icon(
+                Icons.arrow_back_ios_rounded,
+                color: Colors.black45,
+              ),
+            )),
+       // backgroundColor: Colors.transparent,
         body: Stack(
           children: [
             GoogleMap(
@@ -40,7 +51,7 @@ class _myStudentState extends State<myStudent> {
               children: [
                 Container(
                   padding: EdgeInsets.only(
-                    top: 60.0,
+                    top: 40.0,
                   ),
                   child: Text(
                     '',
@@ -56,7 +67,7 @@ class _myStudentState extends State<myStudent> {
             SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.10,
+                  top: MediaQuery.of(context).size.height * 0.05,
                   left: 35,
                   right: 35,
                 ),
@@ -68,8 +79,9 @@ class _myStudentState extends State<myStudent> {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            maximumSize: const Size(130.0, 60.0),
-                            minimumSize: const Size(130.0, 50.0),
+                            maximumSize:  Size(MediaQuery.of(context).size.width * 0.365, MediaQuery.of(context).size.height * 0.08),
+                            minimumSize:  Size(MediaQuery.of(context).size.width * 0.365, MediaQuery.of(context).size.height * 0.08),
+
                             primary: Colors.black,
                             shape: const StadiumBorder(),
                           ),
@@ -86,7 +98,7 @@ class _myStudentState extends State<myStudent> {
                             ],
                           ),
                         ),
-                        SizedBox(width: 30.0),
+                        SizedBox(width: 15.0),
                         Row(
                           //   mainAxisAlignment: MainAxisAlignment.end,
                           //   crossAxisAlignment: CrossAxisAlignment.end,
@@ -94,8 +106,8 @@ class _myStudentState extends State<myStudent> {
                           children: [
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                maximumSize: const Size(140.0, 60.0),
-                                minimumSize: const Size(140.0, 50.0),
+                                maximumSize:  Size(MediaQuery.of(context).size.width * 0.365, MediaQuery.of(context).size.height * 0.08),
+                                minimumSize:  Size(MediaQuery.of(context).size.width * 0.365, MediaQuery.of(context).size.height * 0.08),
                                 primary: Colors.black,
                                 shape: const StadiumBorder(),
                               ),
