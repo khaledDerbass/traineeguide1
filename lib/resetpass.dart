@@ -29,7 +29,7 @@ class _resetPasswordState extends State<resetPassword> {
                   Navigator.pushNamed(context, 'login');
                 },
                 child: Icon(
-                  Icons.arrow_back_ios_rounded,
+                  Icons.arrow_back_ios_new_rounded,
                   color: Colors.black,
                 ),
               )),

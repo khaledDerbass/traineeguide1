@@ -10,7 +10,6 @@ class myStudent extends StatefulWidget {
   @override
   _myStudentState createState() => _myStudentState();
 }
-
 class _myStudentState extends State<myStudent> {
 
   final Completer<GoogleMapController> _controller = Completer();

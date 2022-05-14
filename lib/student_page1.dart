@@ -80,7 +80,7 @@ class _myStudentState1 extends State<myStudent1> {
                                 shape: StadiumBorder(),
                               ),
                               onPressed: () {
-                                Navigator.pushNamed(context, 'student1');
+                                Navigator.pushNamed(context, 'student');
                               },
                               child: Row(
                                 mainAxisAlignment:

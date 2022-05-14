@@ -37,6 +37,9 @@ dependencies:
   json_serializable: ^6.2.0
   http: any
   location: ^4.3.0
+  firebase_database: ^7.2.1
+  firebase_core: ^1.17.0
+  firebase_auth: ^3.3.18
 
 dev_dependencies:
   flutter_test:
