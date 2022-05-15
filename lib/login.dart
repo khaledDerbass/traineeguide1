@@ -109,7 +109,6 @@ class _myLoginState extends State<myLogin> {
                                   final user = await _auth.signInWithEmailAndPassword(
                                       email: email, password: password);
                                   if (user != null) {
-
                                     Navigator.pushNamed(context, 'student1');
                                   }
                                 } catch (e) {
@@ -138,22 +137,8 @@ class _myLoginState extends State<myLogin> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextButton(
-                            onPressed: () async{
-                              setState(() {
-                                showSpinner = true;
-                              });
-                              try {
-                                final user = await _auth.signInWithEmailAndPassword(
-                                    email: email, password: password);
-                                if (user != null) {
-                                  Navigator.pushNamed(context, 'home_screen');
-                                }
-                              } catch (e) {
-                                print(e);
-                              }
-                              setState(() {
-                                showSpinner = false;
-                              });
+                            onPressed: () {
+                              Navigator.pushNamed(context, 'register');
                             },
                             child: Text(
                               'Register',
