@@ -1,19 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:traineeguide/resetpass.dart';
 import 'package:traineeguide/student_page.dart';
 import 'package:traineeguide/student_page1.dart';
 import 'package:traineeguide/student_reg.dart';
 import 'package:traineeguide/supervisor_reg.dart';
-
 import 'login.dart';
 
 
-void main() {
+Future<void> main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp();
   runApp(
     MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: 'login',
-      title: 'Attendance Guide',
+      title: 'Trainee Guide',
       home:myLogin(),
       routes: {
       'login': (context) => myLogin(),

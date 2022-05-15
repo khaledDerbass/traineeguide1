@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+late User loggedinUser;
 
 class myStudent1 extends StatefulWidget {
   const myStudent1({Key? key}) : super(key: key);
@@ -9,7 +12,24 @@ class myStudent1 extends StatefulWidget {
 
 
 class _myStudentState1 extends State<myStudent1> {
+  final _auth = FirebaseAuth.instance;
 
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  //using this function you can use the credentials of the user
+  void getCurrentUser() async {
+    try {
+      final user = await _auth.currentUser;
+      if (user != null) {
+        loggedinUser = user;
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(

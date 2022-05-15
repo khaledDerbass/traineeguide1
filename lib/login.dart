@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -8,13 +9,20 @@ class myLogin extends StatefulWidget {
   @override
   _myLoginState createState() => _myLoginState();
 }
+final _auth = FirebaseAuth.instance;
+
 
 class _myLoginState extends State<myLogin> {
+  late String email;
+  late String password;
+  bool showSpinner = false;
+
+/*
   Future<FirebaseApp> _initializeFirbase() async{
     FirebaseApp firebasApp = await Firebase.initializeApp();
     return firebasApp;
   }
-
+*/
 
   @override
   Widget build(BuildContext context) {
@@ -53,40 +61,33 @@ class _myLoginState extends State<myLogin> {
               SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.25,
+                    top: MediaQuery.of(context).size.height * 0.30,
                     left: 35,
                     right: 35,
                   ),
                   child: Column(
                     children: [
                       TextField(
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          fillColor: Colors.grey.shade50,
-                          filled: true,
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                        ),
-                      ),
+                          keyboardType: TextInputType.emailAddress,
+                          textAlign: TextAlign.center,
+                          onChanged: (value) {
+                            email = value;
+                            //Do something with the user input.
+                          },
+                          decoration: InputDecoration(
+                            hintText: 'Enter your email',
+                          )),
                       SizedBox(height: 30.0),
                       TextFormField(
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter the password';
-                          } else if (value.length <= 6) {
-                            return 'Password must be greater than 6 digits';
-                          }
-                        },
                         obscureText: true,
+                        textAlign: TextAlign.center,
+                        onChanged: (value) {
+                          password = value;
+                          //Do something with the user input.
+                        },
                         decoration: InputDecoration(
-                          labelText: 'Password',
-                          fillColor: Colors.grey.shade100,
-                          filled: true,
-                          // hintText: 'Password',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
+                          hintText: 'Enter your Password',
+
                         ),
                       ),
                       SizedBox(height: 30.0),
@@ -100,8 +101,23 @@ class _myLoginState extends State<myLogin> {
                                 primary: Colors.black,
                                 shape: StadiumBorder(),
                               ),
-                              onPressed: () {
-                                Navigator.pushNamed(context, 'student1');
+                              onPressed: () async{
+                                setState(() {
+                                  showSpinner = true;
+                                });
+                                try {
+                                  final user = await _auth.signInWithEmailAndPassword(
+                                      email: email, password: password);
+                                  if (user != null) {
+
+                                    Navigator.pushNamed(context, 'student1');
+                                  }
+                                } catch (e) {
+                                  print(e);
+                                }
+                                setState(() {
+                                  showSpinner = false;
+                                });
                               },
                               child: Row(
                                 mainAxisAlignment:
@@ -122,8 +138,22 @@ class _myLoginState extends State<myLogin> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, 'register');
+                            onPressed: () async{
+                              setState(() {
+                                showSpinner = true;
+                              });
+                              try {
+                                final user = await _auth.signInWithEmailAndPassword(
+                                    email: email, password: password);
+                                if (user != null) {
+                                  Navigator.pushNamed(context, 'home_screen');
+                                }
+                              } catch (e) {
+                                print(e);
+                              }
+                              setState(() {
+                                showSpinner = false;
+                              });
                             },
                             child: Text(
                               'Register',

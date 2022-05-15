@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class myRegister extends StatefulWidget
@@ -7,8 +8,12 @@ class myRegister extends StatefulWidget
   @override
   _myRegisterState createState() => _myRegisterState();
 }
+final _auth = FirebaseAuth.instance;
 
 class _myRegisterState extends State<myRegister> {
+  late String email;
+  late String password;
+  bool showSpinner = false;
   String dropdownvalue='STS-Specialized Technical Services';
   // List of items in our dropdown menu
   var items = [
@@ -97,6 +102,9 @@ class _myRegisterState extends State<myRegister> {
                             ),
                           ),
                         ),
+                        onChanged: (value) {
+                          email = value;
+                        },
                       ),
                       SizedBox(height: 30.0),
                       TextField(
@@ -126,23 +134,15 @@ class _myRegisterState extends State<myRegister> {
                             ),
                           ),
                         ),
+                        onChanged: (value) {
+                          password = value;
+                        },
                       ),
                       SizedBox(height: 30.0),
                       DropdownButton(
                         // Down Arrow Icon
                           icon: const Icon(Icons.keyboard_arrow_down),
-                         //decoration: InputDecoration(
-                           // fillColor: Colors.transparent,
-                          //border: OutlineInputBorder(
-                           // borderRadius: BorderRadius.circular(10.0),
-                            //borderSide: const BorderSide(
-                             // color: Colors.white,
-                            //),
-                          //),
-                       // ),
-                      // Initial Value
                           value: dropdownvalue,
-
                          // Array list of items
                                items: items.map((String items) {
                                       return DropdownMenuItem(
@@ -171,8 +171,23 @@ class _myRegisterState extends State<myRegister> {
                                 primary: Colors.black,
                                 shape: const StadiumBorder(),
                               ),
-                              onPressed: () {
-                                Navigator.pushNamed(context, 'student');
+    onPressed: () async {
+    setState(() {
+    showSpinner = true;
+    });
+    try {
+    final newUser = await _auth.createUserWithEmailAndPassword(
+    email: email, password: password);
+    if (newUser != null) {
+      Navigator.pushNamed(context, 'student');
+
+    }
+    } catch (e) {
+    print(e);
+    }
+    setState(() {
+    showSpinner = false;
+    });
                               },
                               child: Row(
                                 mainAxisAlignment:
