@@ -1,8 +1,7 @@
-//import 'dart.html';
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-//import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 
 class myStudent extends StatefulWidget {
   const myStudent({Key? key}) : super(key: key);
@@ -11,14 +10,37 @@ class myStudent extends StatefulWidget {
   _myStudentState createState() => _myStudentState();
 }
 class _myStudentState extends State<myStudent> {
+  GoogleMapController? _controller;
+  late Location currentLocation=Location();
+  Set<Marker> _markers={};
 
-  final Completer<GoogleMapController> _controller = Completer();
 
-  static const LatLng _center = LatLng(32.5568, 35.8469);
+  void getLocation() async{
+    var location = await currentLocation.getLocation();
+    currentLocation.onLocationChanged.listen((LocationData loc){
 
-  void _onMapCreated(GoogleMapController controller) {
-    _controller.complete(controller);
+      _controller?.animateCamera(CameraUpdate.newCameraPosition(new CameraPosition(
+        target: LatLng(loc.latitude ?? 0.0,loc.longitude?? 0.0),
+        zoom: 12.0,
+      )));
+      print(loc.latitude);
+      print(loc.longitude);
+      setState(() {
+        _markers.add(Marker(markerId: MarkerId('Home'),
+            position: LatLng(loc.latitude ?? 0.0, loc.longitude ?? 0.0)
+        ));
+      });
+    });
   }
+
+  @override
+  void initState(){
+    super.initState();
+    setState(() {
+      getLocation();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -38,13 +60,17 @@ class _myStudentState extends State<myStudent> {
        // backgroundColor: Colors.transparent,
         body: Stack(
           children: [
-            GoogleMap(
-              onMapCreated: _onMapCreated,
-              initialCameraPosition: const CameraPosition(
-                target: _center,
-                zoom: 11.0,
-              ),
-            ),
+          GoogleMap(
+          zoomControlsEnabled: false,
+          initialCameraPosition:CameraPosition(
+            target: LatLng(48.8561, 2.2930),
+            zoom: 12.0,
+          ),
+          onMapCreated: (GoogleMapController controller){
+            _controller = controller;
+          },
+          markers: _markers,
+        ) ,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -84,7 +110,8 @@ class _myStudentState extends State<myStudent> {
                             primary: Colors.black,
                             shape: const StadiumBorder(),
                           ),
-                          onPressed: () {},
+                          onPressed: () {          getLocation();
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -110,7 +137,8 @@ class _myStudentState extends State<myStudent> {
                                 primary: Colors.black,
                                 shape: const StadiumBorder(),
                               ),
-                              onPressed: () {},
+                              onPressed: () {          getLocation();
+                              },
                               child: Row(
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
@@ -132,7 +160,7 @@ class _myStudentState extends State<myStudent> {
                 ),
               ),
             ),
-          ],
+]
         ),
       ),
     );

@@ -171,23 +171,23 @@ class _myRegisterState extends State<myRegister> {
                                 primary: Colors.black,
                                 shape: const StadiumBorder(),
                               ),
-    onPressed: () async {
-    setState(() {
-    showSpinner = true;
-    });
-    try {
-    final newUser = await _auth.createUserWithEmailAndPassword(
-    email: email, password: password);
-    if (newUser != null) {
-      Navigator.pushNamed(context, 'student');
+                            onPressed: () async {
+                                setState(() {
+                            showSpinner = true;
+                            });
+                            try {
+                            final newUser = await _auth.createUserWithEmailAndPassword(
+                            email: email, password: password);
+                            if (newUser != null) {
+                              Navigator.pushNamed(context, 'student');
 
-    }
-    } catch (e) {
-    print(e);
-    }
-    setState(() {
-    showSpinner = false;
-    });
+                            }
+                            } catch (e) {
+                            print(e);
+                            }
+                            setState(() {
+                            showSpinner = false;
+                            });
                               },
                               child: Row(
                                 mainAxisAlignment:
