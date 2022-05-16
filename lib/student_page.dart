@@ -152,7 +152,7 @@ class _myStudentState extends State<myStudent> {
       lng = loc.longitude ?? 0.0;
       setState(() {
         _markers.add(Marker(
-            markerId: MarkerId('Home'),
+            markerId: MarkerId('User_loc'),
             position:
                 LatLng(loc.latitude ?? 31.963158, loc.longitude ?? 35.930359)));
       });
@@ -233,7 +233,7 @@ class _myStudentState extends State<myStudent> {
                           maximumSize: Size(
                               MediaQuery.of(context).size.width * 0.365,
                               MediaQuery.of(context).size.height * 0.08),
-                          minimumSize: Size(
+                              minimumSize: Size(
                               MediaQuery.of(context).size.width * 0.365,
                               MediaQuery.of(context).size.height * 0.08),
                           primary: Colors.black,
@@ -266,7 +266,7 @@ class _myStudentState extends State<myStudent> {
                               maximumSize: Size(
                                   MediaQuery.of(context).size.width * 0.365,
                                   MediaQuery.of(context).size.height * 0.08),
-                              minimumSize: Size(
+                                  minimumSize: Size(
                                   MediaQuery.of(context).size.width * 0.365,
                                   MediaQuery.of(context).size.height * 0.08),
                               primary: Colors.black,
@@ -275,6 +275,21 @@ class _myStudentState extends State<myStudent> {
                             onPressed: () {
                               getLocation();
                               createCheckOutRecord();
+                              /*
+                              final latSTS = 31.960287056858153;
+                            final lonSTS = 35.85710239682962;
+
+                            final latEst = 32.021217244153064;
+                            final lonEst = 35.86053734959794;
+
+                            final harvesine = new Haversine.fromDegrees(latitude1: latSTS,
+                                longitude1: lonSTS,
+                                latitude2: latEst,
+                                longitude2: lonEst);
+                            if (harvesine.distance() <.2 )
+                                {
+                                }
+                               */
                             },
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,

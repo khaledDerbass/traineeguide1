@@ -46,7 +46,7 @@ class _mySupervisorState extends State<mySupervisor> {
                     top: 60.0,
                   ),
                   child: Text(
-                    'Register as a Supervisor',
+                    'Register as Supervisor',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.black,

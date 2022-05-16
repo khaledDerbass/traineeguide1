@@ -48,7 +48,7 @@ class _mySupervisorState1 extends State<mySupervisor1> {
               backgroundColor: Colors.transparent,
               leading: TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'login');
+                  Navigator.pushNamed(context, 'supervisor');
                 },
                 child: Icon(
                   Icons.arrow_back_ios_rounded,
@@ -63,14 +63,14 @@ class _mySupervisorState1 extends State<mySupervisor1> {
                 children: [
                   Container(
                     padding: EdgeInsets.only(
-                      top: 60.0,
+                      top: 30.0,
                     ),
                     child: Text(
                       'History of students',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 30.0,
+                        fontSize: 20.0,
                       ),
                     ),
                   ),
@@ -86,70 +86,7 @@ class _mySupervisorState1 extends State<mySupervisor1> {
                     left: 35,
                     right: 35,
                   ),
-                  child: Column(
-                    children: [
-                      SizedBox(height: 30.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                maximumSize:  Size(MediaQuery.of(context).size.width * 0.700, MediaQuery.of(context).size.height * 0.50),
-                                minimumSize:  Size(MediaQuery.of(context).size.width * 0.700, MediaQuery.of(context).size.height * 0.08),
-                                primary: Colors.black,
-                                shape: StadiumBorder(),
-                              ),
-                              onPressed: () {
-                                Navigator.pushNamed(context, 'student');
-                              },
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text('Training letter'),
-                                  Icon(
-                                    Icons.content_paste_rounded,
-                                    color: Colors.white,
-                                  ),
-                                ],
-                              )),
 
-
-                        ],
-
-                      ),
-
-                      SizedBox(height: 30.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                maximumSize:  Size(MediaQuery.of(context).size.width * 0.700, MediaQuery.of(context).size.height * 0.50),
-                                minimumSize:  Size(MediaQuery.of(context).size.width * 0.700, MediaQuery.of(context).size.height * 0.08),
-                                primary: Colors.black,
-                                shape: StadiumBorder(),
-                              ),
-                              onPressed: () {
-                                Navigator.pushNamed(context, 'student1');
-                              },
-                              child: Row(
-                                mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Text('Monthly Reports'),
-                                  Icon(
-                                    Icons.content_paste_rounded,
-                                    color: Colors.white,
-                                  ),
-                                ],
-                              )),
-                        ],
-                      ),
-                    ],
-                  ),
                 ),),
             ],
 
