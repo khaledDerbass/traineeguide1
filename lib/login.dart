@@ -118,7 +118,7 @@ class _myLoginState extends State<myLogin> {
                                       builder: (_) => AlertDialog(
                                             title: Text('Alert'),
                                             content:
-                                                Text('Wrong email or Password'),
+                                                Text('Wrong Email Or Password'),
                                           ));
                                 }
                                 setState(() {

@@ -24,11 +24,12 @@ class _myStudentState extends State<myStudent> {
   final CHECK_IN = "CHECK_IN";
   final CHECK_OUT = "CHECK_OUT";
   String lastTransactionType = "";
+  bool firstTime = false;
 
   void createCheckInRecord() {
     getLastUserTransaction();
-    print(lastTransactionType);
-    if (lastTransactionType != "" && lastTransactionType != CHECK_IN) {
+    if ((lastTransactionType != "" && lastTransactionType != CHECK_IN) ||
+        firstTime) {
       databaseReference
           .child("TransactionsHistory")
           .child(auth.currentUser!.uid)
@@ -51,7 +52,7 @@ class _myStudentState extends State<myStudent> {
       }).then((value) => {
                 showDialog(
                     context: context,
-                    builder: (_) => AlertDialog(
+                    builder: (_) => const AlertDialog(
                           title: Text('Alert'),
                           content: Text('Checked In Successfully'),
                         ))
@@ -59,16 +60,17 @@ class _myStudentState extends State<myStudent> {
     } else {
       showDialog(
           context: context,
-          builder: (_) => AlertDialog(
+          builder: (_) => const AlertDialog(
                 title: Text('Alert'),
-                content: Text('You cant Check In until you checked out'),
+                content: Text('You cant Check In until you Checked Out'),
               ));
     }
   }
 
   void createCheckOutRecord() {
     getLastUserTransaction();
-    if (lastTransactionType != "" && lastTransactionType != CHECK_OUT) {
+    if ((lastTransactionType != "" && lastTransactionType != CHECK_OUT) ||
+        firstTime) {
       databaseReference
           .child("TransactionsHistory")
           .child(auth.currentUser!.uid)
@@ -114,18 +116,27 @@ class _myStudentState extends State<myStudent> {
         .limitToLast(1)
         .once()
         .then((DataSnapshot snapshot) {
-      databaseReference
-          .child("TransactionsHistory")
-          .child(auth.currentUser!.uid)
-          .child(snapshot.value.entries.elementAt(0).key)
-          .limitToLast(1)
-          .once()
-          .then((DataSnapshot snapshot) {
-        setState(() {
-          lastTransactionType =
-              snapshot.value.entries.elementAt(0).value['type'];
+      if (snapshot.value != null) {
+        databaseReference
+            .child("TransactionsHistory")
+            .child(auth.currentUser!.uid)
+            .child(snapshot.value.entries.elementAt(0).key)
+            .limitToLast(1)
+            .once()
+            .then((DataSnapshot snapshot) {
+          setState(() {
+            if (snapshot.value.entries != null) {
+              lastTransactionType = snapshot.value.entries != null
+                  ? snapshot.value.entries.elementAt(0).value['type']
+                  : "";
+            }
+          });
         });
-      });
+      } else {
+        setState(() {
+          firstTime = true;
+        });
+      }
     });
   }
 
