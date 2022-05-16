@@ -61,7 +61,7 @@ class _myStudentState extends State<myStudent> {
           context: context,
           builder: (_) => AlertDialog(
                 title: Text('Alert'),
-                content: Text('You cant check in until you checked out'),
+                content: Text('You cant Check In until you checked out'),
               ));
     }
   }
