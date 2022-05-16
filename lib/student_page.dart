@@ -20,46 +20,114 @@ class _myStudentState extends State<myStudent> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   static double lat = 0.0;
   static double lng = 0.0;
+
+  final CHECK_IN = "CHECK_IN";
+  final CHECK_OUT = "CHECK_OUT";
+  String lastTransactionType = "";
+
   void createCheckInRecord() {
-    // print(DateTime.now().millisecondsSinceEpoch.toString());
-    // print(DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch));
-    databaseReference
-        .child("TransactionsHistory")
-        .child(auth.currentUser!.uid)
-        .child(DateTime.now().millisecondsSinceEpoch.toString())
-        .set({
-      'type': 'CHECK_IN',
-      'time': DateTime.now().toString(),
-      'studentID': auth.currentUser!.uid,
-      'location': {
-        'lat': lat,
-        'lng': lng,
-      }
-    });
+    getLastUserTransaction();
+    print(lastTransactionType);
+    if (lastTransactionType != "" && lastTransactionType != CHECK_IN) {
+      databaseReference
+          .child("TransactionsHistory")
+          .child(auth.currentUser!.uid)
+          .child((DateTime.now().day.toString() +
+              "-" +
+              DateTime.now().month.toString() +
+              "-" +
+              DateTime.now().year.toString()))
+          .push()
+          .set({
+        'type': 'CHECK_IN',
+        'time': DateTime.now().hour.toString() +
+            ":" +
+            DateTime.now().minute.toString(),
+        'studentID': auth.currentUser!.uid,
+        'location': {
+          'lat': lat,
+          'lng': lng,
+        }
+      }).then((value) => {
+                showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                          title: Text('Alert'),
+                          content: Text('Checked In Successfully'),
+                        ))
+              });
+    } else {
+      showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+                title: Text('Alert'),
+                content: Text('You cant check in until you checked out'),
+              ));
+    }
   }
 
   void createCheckOutRecord() {
+    getLastUserTransaction();
+    if (lastTransactionType != "" && lastTransactionType != CHECK_OUT) {
+      databaseReference
+          .child("TransactionsHistory")
+          .child(auth.currentUser!.uid)
+          .child((DateTime.now().day.toString() +
+              "-" +
+              DateTime.now().month.toString() +
+              "-" +
+              DateTime.now().year.toString()))
+          .push()
+          .set({
+        'type': 'CHECK_OUT',
+        'time': DateTime.now().hour.toString() +
+            ":" +
+            DateTime.now().minute.toString(),
+        'studentID': auth.currentUser!.uid,
+        'location': {
+          'lat': lat,
+          'lng': lng,
+        }
+      }).then((value) => {
+                showDialog(
+                    context: context,
+                    builder: (_) => AlertDialog(
+                          title: Text('Alert'),
+                          content: Text('Checked out Successfully'),
+                        ))
+              });
+    } else {
+      showDialog(
+          context: context,
+          builder: (_) => AlertDialog(
+                title: Text('Alert'),
+                content:
+                    Text('You cant check out because you are not checked in'),
+              ));
+    }
+  }
+
+  getLastUserTransaction() {
     databaseReference
         .child("TransactionsHistory")
         .child(auth.currentUser!.uid)
-        .child(DateTime.now().millisecondsSinceEpoch.toString())
-        .set({
-      'type': 'CHECK_OUT',
-      'time': DateTime.now().toString(),
-      'studentID': auth.currentUser!.uid,
-      'location': {
-        'lat': lat,
-        'lng': lng,
-      }
+        .limitToLast(1)
+        .once()
+        .then((DataSnapshot snapshot) {
+      databaseReference
+          .child("TransactionsHistory")
+          .child(auth.currentUser!.uid)
+          .child(snapshot.value.entries.elementAt(0).key)
+          .limitToLast(1)
+          .once()
+          .then((DataSnapshot snapshot) {
+        setState(() {
+          lastTransactionType =
+              snapshot.value.entries.elementAt(0).value['type'];
+        });
+      });
     });
   }
-
-  // getLastUserTransaction() {
-  //   databaseReference
-  //       .child("TransactionsHistory")
-  //       .child(auth.currentUser!.uid)
-  //       .child(DateTime.now().millisecondsSinceEpoch.toString()).
-  // }
 
   void getLocation() async {
     var location = await currentLocation.getLocation();
@@ -85,6 +153,7 @@ class _myStudentState extends State<myStudent> {
     super.initState();
     setState(() {
       getLocation();
+      getLastUserTransaction();
     });
   }
 
