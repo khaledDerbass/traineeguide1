@@ -9,8 +9,8 @@ class myLogin extends StatefulWidget {
   @override
   _myLoginState createState() => _myLoginState();
 }
-final _auth = FirebaseAuth.instance;
 
+final _auth = FirebaseAuth.instance;
 
 class _myLoginState extends State<myLogin> {
   late String email;
@@ -87,7 +87,6 @@ class _myLoginState extends State<myLogin> {
                         },
                         decoration: InputDecoration(
                           hintText: 'Enter your Password',
-
                         ),
                       ),
                       SizedBox(height: 30.0),
@@ -101,18 +100,26 @@ class _myLoginState extends State<myLogin> {
                                 primary: Colors.black,
                                 shape: StadiumBorder(),
                               ),
-                              onPressed: () async{
+                              onPressed: () async {
                                 setState(() {
                                   showSpinner = true;
                                 });
                                 try {
-                                  final user = await _auth.signInWithEmailAndPassword(
-                                      email: email, password: password);
+                                  final user =
+                                      await _auth.signInWithEmailAndPassword(
+                                          email: email, password: password);
                                   if (user != null) {
                                     Navigator.pushNamed(context, 'student1');
-                                  }
+                                  } else {}
                                 } catch (e) {
                                   print(e);
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) => AlertDialog(
+                                            title: Text('Alert'),
+                                            content:
+                                                Text('Wrong email or Password'),
+                                          ));
                                 }
                                 setState(() {
                                   showSpinner = false;
@@ -120,7 +127,7 @@ class _myLoginState extends State<myLogin> {
                               },
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text('LOGIN'),
