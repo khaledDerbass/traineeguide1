@@ -101,7 +101,7 @@ class _myStudentState extends State<myStudent> {
     } else {
       showDialog(
           context: context,
-          builder: (_) => AlertDialog(
+          builder: (_) => const AlertDialog(
                 title: Text('Alert'),
                 content:
                     Text('You cant check out because you are not checked in'),

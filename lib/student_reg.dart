@@ -19,8 +19,6 @@ class _myRegisterState extends State<myRegister> {
   var items = [
     'STS-Specialized Technical Services',
     'Estarta Solutions ',
-    'Smart Way Business Solutions',
-    'Image Technologies (ITEC)',
     'IRIS Technology ',
   ];
   @override
@@ -71,69 +69,50 @@ class _myRegisterState extends State<myRegister> {
               SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.12,
+                    top: MediaQuery.of(context).size.height * 0.15,
                     left: 35,
                     right: 35,
                   ),
                   child: Column(
                     children: [
                       TextField(
+                        textAlign: TextAlign.center,
                         decoration: InputDecoration(
-                          labelText: 'Username',
-                          fillColor: Colors.grey.shade100,
-                          filled: true,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: const BorderSide(
-                                color: Colors.white,
-                              )),
+                          hintText: 'Username',
                         ),
                       ),
                       SizedBox(height: 30.0),
                       TextField(
-                        decoration: InputDecoration(
-                          fillColor: Colors.transparent,
-                          filled: true,
-                          labelText: 'Email',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+                        keyboardType: TextInputType.emailAddress,
+                        textAlign: TextAlign.center,
                         onChanged: (value) {
                           email = value;
+                          //Do something with the user input.
                         },
-                      ),
-                      SizedBox(height: 30.0),
-                      TextField(
                         decoration: InputDecoration(
-                          fillColor: Colors.transparent,
-                          filled: true,
-                          labelText: 'Phone',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(
-                              color: Colors.white,
+                          hintText: 'Email',
+
                             ),
                           ),
-                        ),
-                      ),
+
                       SizedBox(height: 30.0),
                       TextField(
-                        obscureText: true,
+                        textAlign: TextAlign.center,
+                        onChanged: (value) {
+                          email = value;
+                          //Do something with the user input.
+                        },
                         decoration: InputDecoration(
-                          fillColor: Colors.transparent,
-                          filled: true,
-                          labelText: 'Password',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(
-                              color: Colors.white,
-                            ),
+
+                          hintText: 'Phone',
+                      )),
+
+                      SizedBox(height: 30.0),
+                      TextField(
+                        textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                        hintText: 'Password',
                           ),
-                        ),
                         onChanged: (value) {
                           password = value;
                         },

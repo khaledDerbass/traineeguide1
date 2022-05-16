@@ -132,7 +132,9 @@ class _mySupervisorState extends State<mySupervisor> {
                               primary: Colors.black,
                               shape: const StadiumBorder(),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, 'supervisor1');
+                            },
                             child: Row(
                               mainAxisAlignment:
                               MainAxisAlignment.spaceBetween,

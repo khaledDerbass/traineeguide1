@@ -4,6 +4,7 @@ import 'package:traineeguide/resetpass.dart';
 import 'package:traineeguide/student_page.dart';
 import 'package:traineeguide/student_page1.dart';
 import 'package:traineeguide/student_reg.dart';
+import 'package:traineeguide/supervisor_page.dart';
 import 'package:traineeguide/supervisor_reg.dart';
 import 'login.dart';
 
@@ -21,9 +22,9 @@ Future<void> main() async {
       'login': (context) => myLogin(),
       'register': (context) => myRegister(),
       'forgot': (context) => resetPassword(),
-      'supervisor': (context) => mySupervisor(),
       'student': (context) => myStudent(),
-      'student1': (context) => myStudent1()
-
+      'student1': (context) => myStudent1(),
+      'supervisor': (context) => mySupervisor(),
+      'supervisor1': (context) => mySupervisor1(),
       }));
-      }
+}
