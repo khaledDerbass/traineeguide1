@@ -94,16 +94,13 @@ class _myRegisterState extends State<myRegister> {
                       SizedBox(height: 30.0),
                       TextField(
                           textAlign: TextAlign.center,
-                          onChanged: (value) {
-                            email = value;
-                            //Do something with the user input.
-                          },
                           decoration: InputDecoration(
                             hintText: 'Phone',
                           )),
                       SizedBox(height: 30.0),
                       TextField(
                         textAlign: TextAlign.center,
+                        obscureText: true,
                         decoration: InputDecoration(
                           hintText: 'Password',
                         ),

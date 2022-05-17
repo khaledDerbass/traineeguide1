@@ -13,7 +13,8 @@ class mySupervisor extends StatefulWidget {
 class _mySupervisorState extends State<mySupervisor> {
   final _auth = FirebaseAuth.instance;
   final databaseReference = FirebaseDatabase.instance.reference();
-
+  late String email;
+  late String password;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -70,58 +71,42 @@ class _mySupervisorState extends State<mySupervisor> {
                   child: Column(
                     children: [
                       TextField(
+                        textAlign: TextAlign.center,
                         decoration: InputDecoration(
-                          labelText: 'Employee ID',
-                          fillColor: Colors.grey.shade100,
+                          hintText: 'Employee ID',
+                          fillColor: Colors.transparent,
                           filled: true,
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                              borderSide: const BorderSide(
-                                color: Colors.white,
-                              )),
                         ),
                       ),
                       SizedBox(height: 30.0),
                       TextField(
+                        textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           fillColor: Colors.transparent,
                           filled: true,
-                          labelText: 'Email',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: BorderSide(
-                              color: Colors.white,
-                            ),
-                          ),
+                          hintText: 'Email',
                         ),
+                        onChanged: (value) {
+                          email = value;
+                        },
                       ),
                       SizedBox(height: 30.0),
                       TextField(
+                        textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           fillColor: Colors.transparent,
                           filled: true,
-                          labelText: 'Phone',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(
-                              color: Colors.white,
-                            ),
-                          ),
+                          hintText: 'Phone',
                         ),
                       ),
                       SizedBox(height: 30.0),
                       TextField(
                         obscureText: true,
+                        textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           fillColor: Colors.transparent,
                           filled: true,
-                          labelText: 'Password',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                            borderSide: const BorderSide(
-                              color: Colors.white,
-                            ),
-                          ),
+                          hintText: 'Password',
                         ),
                       ),
                       SizedBox(height: 30.0),
