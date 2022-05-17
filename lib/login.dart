@@ -1,7 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 
 class myLogin extends StatefulWidget {
   const myLogin({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _myLoginState extends State<myLogin> {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              'assets/login.png',
+              'assets/register.png',
             ),
             fit: BoxFit.cover,
           ),
@@ -44,26 +45,21 @@ class _myLoginState extends State<myLogin> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.only(
-                      top: 60.0,
-                    ),
-                    child: Text(
-                      'Trainee Guide\n\n LOGIN',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 30.0,
-                      ),
-                    ),
-                  ),
+                    padding: EdgeInsets.all(
+                       15.0),
+                      child: Image.asset(
+                          'assets/logo.png'),
+                    height: 300,
+                    width: 350),
+
                 ],
               ),
               SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.30,
-                    left: 35,
-                    right: 35,
+                    top: MediaQuery.of(context).size.height * 0.35,
+                    left: 70,
+                    right: 70,
                   ),
                   child: Column(
                     children: [

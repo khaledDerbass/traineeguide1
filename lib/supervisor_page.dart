@@ -90,8 +90,6 @@ class _mySupervisorState1 extends State<mySupervisor1> {
 
                 ),),
             ],
-
-
           ),
         ),
       ),
