@@ -63,7 +63,7 @@ class _mySupervisorState1 extends State<mySupervisor1> {
                 children: [
                   Container(
                     padding: EdgeInsets.only(
-                      top: 30.0,
+                      top: 10.0,
                     ),
                     child: Text(
                       'History of students',
@@ -76,23 +76,66 @@ class _mySupervisorState1 extends State<mySupervisor1> {
                   ),
                 ],
               ),
-              SingleChildScrollView(
-                child: Container(
-                  padding: EdgeInsets.only(
-                    top: MediaQuery
-                        .of(context)
-                        .size
-                        .height * 0.25,
-                    left: 35,
-                    right: 35,
-                  ),
+          Padding(
+              padding: const EdgeInsets.only(
+                  top: 50.0, left: 10, right: 10
+              ),
 
+                  child: DataTable(
 
-                ),),
-            ],
+                            columns: const <DataColumn>[
+                            DataColumn(
+                            label: Text(
+                            'Name',
+                            style: TextStyle(fontStyle: FontStyle.italic),
+                          ),
+                        ),
+                        DataColumn(
+                        label: Text(
+                        'DATE',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                        ),
+                        ),
+                        DataColumn(
+                        label: Text(
+                        'Check IN/OUT',
+                        style: TextStyle(fontStyle: FontStyle.italic),
+                        ),
+                        ),
+                        ],
+                        rows: const <DataRow>[
+                        DataRow(
+                        cells: <DataCell>[
+                        DataCell(Text('Sarah')),
+                        DataCell(Text('19')),
+                        DataCell(Text('Student')),
+                        ],
+                        ),
+                        DataRow(
+                        cells: <DataCell>[
+                        DataCell(Text('Janine')),
+                        DataCell(Text('43')),
+                        DataCell(Text('Professor')),
+                        ],
+                        ),
+                        DataRow(
+                        cells: <DataCell>[
+                        DataCell(Text('William')),
+                        DataCell(Text('27')),
+                        DataCell(Text('Associate Professor')),
+                        ],
+                        ),
+                        ],
+                        )
           ),
-        ),
+                    ],
+          ),
+                ),
       ),
-    );
+
+
+        );
+
+
   }
 }
