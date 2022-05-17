@@ -1,20 +1,22 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 
-class myRegister extends StatefulWidget
-{
+class myRegister extends StatefulWidget {
   const myRegister({Key? key}) : super(key: key);
 
   @override
   _myRegisterState createState() => _myRegisterState();
 }
+
 final _auth = FirebaseAuth.instance;
 
 class _myRegisterState extends State<myRegister> {
   late String email;
   late String password;
   bool showSpinner = false;
-  String dropdownvalue='STS-Specialized Technical Services';
+  final databaseReference = FirebaseDatabase.instance.reference();
+  String dropdownvalue = 'STS-Specialized Technical Services';
   // List of items in our dropdown menu
   var items = [
     'STS-Specialized Technical Services',
@@ -60,12 +62,8 @@ class _myRegisterState extends State<myRegister> {
                       fontSize: 30.0,
                     ),
                   ),
-
                 ],
               ),
-
-
-
               SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.only(
@@ -91,54 +89,47 @@ class _myRegisterState extends State<myRegister> {
                         },
                         decoration: InputDecoration(
                           hintText: 'Email',
-
-                            ),
-                          ),
-
+                        ),
+                      ),
                       SizedBox(height: 30.0),
                       TextField(
-                        textAlign: TextAlign.center,
-                        onChanged: (value) {
-                          email = value;
-                          //Do something with the user input.
-                        },
-                        decoration: InputDecoration(
-
-                          hintText: 'Phone',
-                      )),
-
+                          textAlign: TextAlign.center,
+                          onChanged: (value) {
+                            email = value;
+                            //Do something with the user input.
+                          },
+                          decoration: InputDecoration(
+                            hintText: 'Phone',
+                          )),
                       SizedBox(height: 30.0),
                       TextField(
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
-                        hintText: 'Password',
-                          ),
+                          hintText: 'Password',
+                        ),
                         onChanged: (value) {
                           password = value;
                         },
                       ),
                       SizedBox(height: 30.0),
                       DropdownButton(
-                        // Down Arrow Icon
+                          // Down Arrow Icon
                           icon: const Icon(Icons.keyboard_arrow_down),
                           value: dropdownvalue,
-                         // Array list of items
-                               items: items.map((String items) {
-                                      return DropdownMenuItem(
-                                      value: items,
-                                      child: Text(items),
-                                      );
-                                    }).toList(),
-                                    // After selecting the desired option,it will
-                                    // change button value to selected value
-                                    onChanged: (String? newValue) {
-                                    setState(() {
-                                    dropdownvalue = newValue!;
-                                    });
-                            }
-
-                    ),
-
+                          // Array list of items
+                          items: items.map((String items) {
+                            return DropdownMenuItem(
+                              value: items,
+                              child: Text(items),
+                            );
+                          }).toList(),
+                          // After selecting the desired option,it will
+                          // change button value to selected value
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              dropdownvalue = newValue!;
+                            });
+                          }),
                       SizedBox(height: 30.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -150,27 +141,36 @@ class _myRegisterState extends State<myRegister> {
                                 primary: Colors.black,
                                 shape: const StadiumBorder(),
                               ),
-                            onPressed: () async {
+                              onPressed: () async {
                                 setState(() {
-                            showSpinner = true;
-                            });
-                            try {
-                            final newUser = await _auth.createUserWithEmailAndPassword(
-                            email: email, password: password);
-                            if (newUser != null) {
-                              Navigator.pushNamed(context, 'student');
-
-                            }
-                            } catch (e) {
-                            print(e);
-                            }
-                            setState(() {
-                            showSpinner = false;
-                            });
+                                  showSpinner = true;
+                                });
+                                try {
+                                  final newUser = await _auth
+                                      .createUserWithEmailAndPassword(
+                                          email: email, password: password);
+                                  if (newUser != null) {
+                                    Navigator.pushNamed(context, 'student');
+                                    databaseReference
+                                        .child("Users")
+                                        .child(_auth.currentUser!.uid)
+                                        .set({
+                                      'id': _auth.currentUser!.uid,
+                                      'role_id': 1,
+                                      'email': email,
+                                      'password': password,
+                                    });
+                                  }
+                                } catch (e) {
+                                  print(e);
+                                }
+                                setState(() {
+                                  showSpinner = false;
+                                });
                               },
                               child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 //crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text('REGISTER'),
@@ -180,7 +180,8 @@ class _myRegisterState extends State<myRegister> {
                                   ),
                                 ],
                               )),
-],),
+                        ],
+                      ),
                       SizedBox(height: 30.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -189,21 +190,17 @@ class _myRegisterState extends State<myRegister> {
                             onPressed: () {
                               Navigator.pushNamed(context, 'supervisor');
                             },
-                                child: Text(
+                            child: Text(
                               'Register as SUPERVISOR',
                               style: TextStyle(color: Colors.black),
                             ),
                           )
                         ],
-
-                        ),
-                       ],
                       ),
-
-
-
+                    ],
                   ),
                 ),
+              ),
             ],
           ),
         ),
