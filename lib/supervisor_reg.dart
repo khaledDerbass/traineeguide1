@@ -48,7 +48,7 @@ class _mySupervisorState extends State<mySupervisor> {
                 children: [
                   Container(
                     padding: EdgeInsets.only(
-                      top: 60.0,
+                      top: 30.0,
                     ),
                     child: Text(
                       'Register as Supervisor',

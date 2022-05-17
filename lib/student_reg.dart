@@ -54,16 +54,21 @@ class _myRegisterState extends State<myRegister> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    'Register as\nSTUDENT',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 30.0,
-                    ),
-                  ),
-                ],
-              ),
+                    Container(
+                        padding: EdgeInsets.only(
+                          top: 30.0,
+                        ),
+                        child: Text(
+                          'Register as STUDENT',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      ),
+            ],
+          ),
               SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.only(
