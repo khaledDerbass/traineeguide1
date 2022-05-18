@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -16,6 +17,8 @@ final _auth = FirebaseAuth.instance;
 class _myLoginState extends State<myLogin> {
   late String email;
   late String password;
+  late var userData = null;
+  final databaseReference = FirebaseDatabase.instance.reference();
   bool showSpinner = false;
 
 /*
@@ -24,6 +27,10 @@ class _myLoginState extends State<myLogin> {
     return firebasApp;
   }
 */
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +52,10 @@ class _myLoginState extends State<myLogin> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(
-                       15.0),
-                      child: Image.asset(
-                          'assets/logo.png'),
-                    height: 300,
-                    width: 350),
-
+                      padding: EdgeInsets.all(15.0),
+                      child: Image.asset('assets/logo.png'),
+                      height: 300,
+                      width: 350),
                 ],
               ),
               SingleChildScrollView(
@@ -105,8 +109,18 @@ class _myLoginState extends State<myLogin> {
                                       await _auth.signInWithEmailAndPassword(
                                           email: email, password: password);
                                   if (user != null) {
-                                    Navigator.pushNamed(context, 'student1');
-                                  } else {}
+                                    databaseReference
+                                        .child("Users")
+                                        .child(_auth.currentUser!.uid)
+                                        .once()
+                                        .then((DataSnapshot snapshot) {
+                                      snapshot.value['role_id'] == 1
+                                          ? Navigator.pushNamed(
+                                              context, 'student1')
+                                          : Navigator.pushNamed(
+                                              context, 'supervisor1');
+                                    });
+                                  }
                                 } catch (e) {
                                   print(e);
                                   showDialog(

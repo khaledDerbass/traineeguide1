@@ -108,6 +108,9 @@ class _mySupervisorState extends State<mySupervisor> {
                           filled: true,
                           hintText: 'Password',
                         ),
+                        onChanged: (value) {
+                          password = value;
+                        },
                       ),
                       SizedBox(height: 30.0),
                       Row(
@@ -121,24 +124,38 @@ class _mySupervisorState extends State<mySupervisor> {
                               shape: const StadiumBorder(),
                             ),
                             onPressed: () async {
-                              Navigator.pushNamed(context, 'supervisor1');
-                              // TODO : Add Email and Password fields Then UnComment this.
+                              //Navigator.pushNamed(context, 'supervisor1');
                               try {
-                                // final newUser = await _auth.createUserWithEmailAndPassword(email: email, password: password);
-                                // if (newUser != null) {
-                                //   Navigator.pushNamed(context, 'supervisor1');
-                                //   databaseReference
-                                //       .child("Users")
-                                //       .child(_auth.currentUser!.uid)
-                                //       .set({
-                                //     'id': _auth.currentUser!.uid,
-                                //     'role_id': 2,
-                                //     'email': email,
-                                //     'password': password,
-                                //   });
-                                // }
+                                final newUser =
+                                    await _auth.createUserWithEmailAndPassword(
+                                        email: email, password: password);
+                                if (newUser != null) {
+                                  databaseReference
+                                      .child("Users")
+                                      .child(_auth.currentUser!.uid)
+                                      .set({
+                                    'id': _auth.currentUser!.uid,
+                                    'role_id': 2,
+                                    'email': email,
+                                    'password': password,
+                                  });
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) => const AlertDialog(
+                                            title: Text('Alert'),
+                                            content: Text(
+                                                'Your Account has been created successfully'),
+                                          ));
+                                  Navigator.pushNamed(context, 'supervisor1');
+                                }
                               } catch (e) {
                                 print(e);
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => const AlertDialog(
+                                          title: Text('Alert'),
+                                          content: Text('Error during signup'),
+                                        ));
                               }
                             },
                             child: Row(
