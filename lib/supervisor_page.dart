@@ -16,7 +16,7 @@ class mySupervisor1 extends StatefulWidget {
 class _mySupervisorState1 extends State<mySupervisor1> {
   final _auth = FirebaseAuth.instance;
   final databaseReference = FirebaseDatabase.instance.reference();
-  static var result = null;
+  var result = null;
   bool isLoading = false;
   @override
   void initState() {
@@ -70,7 +70,7 @@ class _mySupervisorState1 extends State<mySupervisor1> {
               backgroundColor: Colors.transparent,
               leading: TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'supervisor');
+                  Navigator.pop(context);
                 },
                 child: Icon(
                   Icons.arrow_back_ios_rounded,
@@ -101,13 +101,20 @@ class _mySupervisorState1 extends State<mySupervisor1> {
               Center(
                 child: Padding(
                     padding:
-                        const EdgeInsets.only(top: 50.0, left: 10, right: 10),
+                        const EdgeInsets.only(top: 10.0, left: 2, right: 2),
                     child: result != null
                         ? DataTable(
+                            columnSpacing: 30.0,
                             columns: const <DataColumn>[
                               DataColumn(
                                 label: Text(
                                   'Name',
+                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Date',
                                   style: TextStyle(fontStyle: FontStyle.italic),
                                 ),
                               ),
@@ -136,16 +143,30 @@ class _mySupervisorState1 extends State<mySupervisor1> {
   }
 
   List<DataRow> getRows() {
-    // NEED FIX
+    late Map<dynamic, dynamic> list = result;
+    late Map<dynamic, dynamic> datalist =
+        new Map<dynamic, dynamic>(); //list.entries.first.value;
+    for (int i = 0; i < list.length; i++) {
+      print(list.entries.elementAt(i).value);
+      datalist.addAll(list.entries.elementAt(i).value);
+    }
     return List<DataRow>.generate(
-        result.length,
+        datalist.length,
         (index) => DataRow(cells: [
               DataCell(Text(
-                  result.entries.elementAt(index).value['studentID'] ?? "-")),
+                  datalist.entries.elementAt(index).value['studentID'] != null
+                      ? datalist.entries
+                          .elementAt(index)
+                          .value['studentID']
+                          .toString()
+                          .substring(0, 8)
+                      : "-")),
               DataCell(
-                  Text(result.entries.elementAt(index).value['time'] ?? "-")),
+                  Text(datalist.entries.elementAt(index).value['Date'] ?? "-")),
               DataCell(
-                  Text(result.entries.elementAt(index).value['type'] ?? "-")),
+                  Text(datalist.entries.elementAt(index).value['time'] ?? "-")),
+              DataCell(
+                  Text(datalist.entries.elementAt(index).value['type'] ?? "-")),
             ]));
   }
 }
