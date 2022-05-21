@@ -54,21 +54,21 @@ class _myRegisterState extends State<myRegister> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                    Container(
-                        padding: EdgeInsets.only(
-                          top: 30.0,
-                        ),
-                        child: Text(
-                          'Register as STUDENT',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20.0,
-                          ),
-                        ),
+                  Container(
+                    padding: EdgeInsets.only(
+                      top: 30.0,
+                    ),
+                    child: Text(
+                      'Register as STUDENT',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20.0,
                       ),
-            ],
-          ),
+                    ),
+                  ),
+                ],
+              ),
               SingleChildScrollView(
                 child: Container(
                   padding: EdgeInsets.only(
@@ -152,7 +152,6 @@ class _myRegisterState extends State<myRegister> {
                                       .createUserWithEmailAndPassword(
                                           email: email, password: password);
                                   if (newUser != null) {
-                                    Navigator.pushNamed(context, 'student');
                                     databaseReference
                                         .child("Users")
                                         .child(_auth.currentUser!.uid)
@@ -162,9 +161,25 @@ class _myRegisterState extends State<myRegister> {
                                       'email': email,
                                       'password': password,
                                     });
+
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) => const AlertDialog(
+                                              title: Text('Alert'),
+                                              content: Text(
+                                                  'Your Account has been created successfully'),
+                                            ));
+                                    Navigator.pushNamed(context, 'student');
                                   }
                                 } catch (e) {
                                   print(e);
+                                  showDialog(
+                                      context: context,
+                                      builder: (_) => const AlertDialog(
+                                            title: Text('Alert'),
+                                            content:
+                                                Text('Error during signup'),
+                                          ));
                                 }
                                 setState(() {
                                   showSpinner = false;

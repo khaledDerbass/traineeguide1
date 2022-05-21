@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 late User loggedinUser;
 
@@ -10,13 +13,16 @@ class mySupervisor1 extends StatefulWidget {
   _mySupervisorState1 createState() => _mySupervisorState1();
 }
 
-
 class _mySupervisorState1 extends State<mySupervisor1> {
   final _auth = FirebaseAuth.instance;
-
+  final databaseReference = FirebaseDatabase.instance.reference();
+  var result = null;
+  bool isLoading = false;
+  @override
   void initState() {
     super.initState();
     getCurrentUser();
+    getStudentsTransactions();
   }
 
   //using this function you can use the credentials of the user
@@ -30,6 +36,22 @@ class _mySupervisorState1 extends State<mySupervisor1> {
       print(e);
     }
   }
+
+  getStudentsTransactions() {
+    setState(() {
+      isLoading = true;
+    });
+    databaseReference
+        .child("TransactionsHistory")
+        .once()
+        .then((DataSnapshot snapshot) {
+      setState(() {
+        isLoading = false;
+        result = snapshot.value;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -48,7 +70,7 @@ class _mySupervisorState1 extends State<mySupervisor1> {
               backgroundColor: Colors.transparent,
               leading: TextButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, 'supervisor');
+                  Navigator.pop(context);
                 },
                 child: Icon(
                   Icons.arrow_back_ios_rounded,
@@ -76,66 +98,75 @@ class _mySupervisorState1 extends State<mySupervisor1> {
                   ),
                 ],
               ),
-          Padding(
-              padding: const EdgeInsets.only(
-                  top: 50.0, left: 10, right: 10
-              ),
-
-                  child: DataTable(
-
+              Center(
+                child: Padding(
+                    padding:
+                        const EdgeInsets.only(top: 10.0, left: 2, right: 2),
+                    child: result != null
+                        ? DataTable(
+                            columnSpacing: 30.0,
                             columns: const <DataColumn>[
-                            DataColumn(
-                            label: Text(
-                            'Name',
-                            style: TextStyle(fontStyle: FontStyle.italic),
-                          ),
-                        ),
-                        DataColumn(
-                        label: Text(
-                        'DATE',
-                        style: TextStyle(fontStyle: FontStyle.italic),
-                        ),
-                        ),
-                        DataColumn(
-                        label: Text(
-                        'Check IN/OUT',
-                        style: TextStyle(fontStyle: FontStyle.italic),
-                        ),
-                        ),
-                        ],
-                        rows: const <DataRow>[
-                        DataRow(
-                        cells: <DataCell>[
-                        DataCell(Text('Sarah')),
-                        DataCell(Text('19')),
-                        DataCell(Text('Student')),
-                        ],
-                        ),
-                        DataRow(
-                        cells: <DataCell>[
-                        DataCell(Text('Janine')),
-                        DataCell(Text('43')),
-                        DataCell(Text('Professor')),
-                        ],
-                        ),
-                        DataRow(
-                        cells: <DataCell>[
-                        DataCell(Text('William')),
-                        DataCell(Text('27')),
-                        DataCell(Text('Associate Professor')),
-                        ],
-                        ),
-                        ],
-                        )
+                              DataColumn(
+                                label: Text(
+                                  'Name',
+                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Date',
+                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Time',
+                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Text(
+                                  'Type',
+                                  style: TextStyle(fontStyle: FontStyle.italic),
+                                ),
+                              ),
+                            ],
+                            rows: getRows(),
+                          )
+                        : const CircularProgressIndicator()),
+              ),
+            ],
           ),
-                    ],
-          ),
-                ),
+        ),
       ),
+    );
+  }
 
-
-        );
-
-
+  List<DataRow> getRows() {
+    late Map<dynamic, dynamic> list = result;
+    late Map<dynamic, dynamic> datalist =
+        new Map<dynamic, dynamic>(); //list.entries.first.value;
+    for (int i = 0; i < list.length; i++) {
+      print(list.entries.elementAt(i).value);
+      datalist.addAll(list.entries.elementAt(i).value);
+    }
+    return List<DataRow>.generate(
+        datalist.length,
+        (index) => DataRow(cells: [
+              DataCell(Text(
+                  datalist.entries.elementAt(index).value['studentID'] != null
+                      ? datalist.entries
+                          .elementAt(index)
+                          .value['studentID']
+                          .toString()
+                          .substring(0, 8)
+                      : "-")),
+              DataCell(
+                  Text(datalist.entries.elementAt(index).value['Date'] ?? "-")),
+              DataCell(
+                  Text(datalist.entries.elementAt(index).value['time'] ?? "-")),
+              DataCell(
+                  Text(datalist.entries.elementAt(index).value['type'] ?? "-")),
+            ]));
   }
 }

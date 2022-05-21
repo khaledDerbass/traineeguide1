@@ -33,18 +33,18 @@ class _myStudentState extends State<myStudent> {
       databaseReference
           .child("TransactionsHistory")
           .child(auth.currentUser!.uid)
-          .child((DateTime.now().day.toString() +
-              "-" +
-              DateTime.now().month.toString() +
-              "-" +
-              DateTime.now().year.toString()))
           .push()
           .set({
         'type': 'CHECK_IN',
+        'Date': (DateTime.now().day.toString() +
+            "-" +
+            DateTime.now().month.toString() +
+            "-" +
+            DateTime.now().year.toString()),
         'time': DateTime.now().hour.toString() +
             ":" +
             DateTime.now().minute.toString(),
-        'studentID': auth.currentUser!.uid,
+        'studentID': auth.currentUser!.email,
         'location': {
           'lat': lat,
           'lng': lng,
@@ -57,6 +57,9 @@ class _myStudentState extends State<myStudent> {
                           content: Text('Checked In Successfully'),
                         ))
               });
+      setState(() {
+        firstTime = false;
+      });
     } else {
       showDialog(
           context: context,
@@ -74,18 +77,18 @@ class _myStudentState extends State<myStudent> {
       databaseReference
           .child("TransactionsHistory")
           .child(auth.currentUser!.uid)
-          .child((DateTime.now().day.toString() +
-              "-" +
-              DateTime.now().month.toString() +
-              "-" +
-              DateTime.now().year.toString()))
           .push()
           .set({
         'type': 'CHECK_OUT',
         'time': DateTime.now().hour.toString() +
             ":" +
             DateTime.now().minute.toString(),
-        'studentID': auth.currentUser!.uid,
+        'Date': (DateTime.now().day.toString() +
+            "-" +
+            DateTime.now().month.toString() +
+            "-" +
+            DateTime.now().year.toString()),
+        'studentID': auth.currentUser!.email,
         'location': {
           'lat': lat,
           'lng': lng,
@@ -120,12 +123,12 @@ class _myStudentState extends State<myStudent> {
         databaseReference
             .child("TransactionsHistory")
             .child(auth.currentUser!.uid)
-            .child(snapshot.value.entries.elementAt(0).key)
             .limitToLast(1)
             .once()
             .then((DataSnapshot snapshot) {
           setState(() {
             if (snapshot.value.entries != null) {
+              print(snapshot.value.entries.elementAt(0).value['type']);
               lastTransactionType = snapshot.value.entries != null
                   ? snapshot.value.entries.elementAt(0).value['type']
                   : "";
@@ -233,7 +236,7 @@ class _myStudentState extends State<myStudent> {
                           maximumSize: Size(
                               MediaQuery.of(context).size.width * 0.365,
                               MediaQuery.of(context).size.height * 0.08),
-                              minimumSize: Size(
+                          minimumSize: Size(
                               MediaQuery.of(context).size.width * 0.365,
                               MediaQuery.of(context).size.height * 0.08),
                           primary: Colors.black,
@@ -266,7 +269,7 @@ class _myStudentState extends State<myStudent> {
                               maximumSize: Size(
                                   MediaQuery.of(context).size.width * 0.365,
                                   MediaQuery.of(context).size.height * 0.08),
-                                  minimumSize: Size(
+                              minimumSize: Size(
                                   MediaQuery.of(context).size.width * 0.365,
                                   MediaQuery.of(context).size.height * 0.08),
                               primary: Colors.black,
