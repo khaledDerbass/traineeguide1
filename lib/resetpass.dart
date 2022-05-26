@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class resetPassword extends StatefulWidget {
@@ -8,6 +9,8 @@ class resetPassword extends StatefulWidget {
 }
 
 class _resetPasswordState extends State<resetPassword> {
+  late String _email;
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -64,16 +67,13 @@ class _resetPasswordState extends State<resetPassword> {
                   child: Column(
                     children: [
                       TextFormField(
-                        obscureText: true,
                         decoration: InputDecoration(
-                          labelText: 'Email',
-                          fillColor: Colors.grey.shade100,
+                          hintText: 'Email',
                           filled: true,
-                          // hintText: 'Password',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
                         ),
+                        onChanged: (value) {
+                          _email = value;
+                        },
                       ),
                       SizedBox(height: 30.0),
                       Row(
@@ -86,7 +86,7 @@ class _resetPasswordState extends State<resetPassword> {
                                 primary: Colors.black,
                                 shape: StadiumBorder(),
                               ),
-                              onPressed: () {},
+                              onPressed: resetPassword,
                               child: Row(
                                 mainAxisAlignment:
                                 MainAxisAlignment.spaceBetween,
@@ -126,5 +126,17 @@ class _resetPasswordState extends State<resetPassword> {
         ),
       ),
     );
+  }
+  Future resetPassword() async
+  {
+
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: _email);
+      Navigator.of(context, rootNavigator: true).pop('dialog');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content:Text('Password Reset Email Sent'),
+          duration: Duration(seconds: 3),
+        ),
+      );
   }
 }

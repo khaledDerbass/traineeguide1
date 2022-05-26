@@ -16,12 +16,13 @@ class _myRegisterState extends State<myRegister> {
   late String password;
   bool showSpinner = false;
   final databaseReference = FirebaseDatabase.instance.reference();
-  String dropdownvalue = 'STS-Specialized Technical Services';
+  String dropdownvalue ='Al al-Bayt University';
   // List of items in our dropdown menu
   var items = [
     'STS-Specialized Technical Services',
     'Estarta Solutions ',
     'IRIS Technology ',
+    'Al al-Bayt University'
   ];
   @override
   Widget build(BuildContext context) {
@@ -79,6 +80,7 @@ class _myRegisterState extends State<myRegister> {
                   child: Column(
                     children: [
                       TextField(
+
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           hintText: 'Username',
@@ -160,6 +162,7 @@ class _myRegisterState extends State<myRegister> {
                                       'role_id': 1,
                                       'email': email,
                                       'password': password,
+                                      'site':dropdownvalue,
                                     });
 
                                     showDialog(
@@ -169,7 +172,7 @@ class _myRegisterState extends State<myRegister> {
                                               content: Text(
                                                   'Your Account has been created successfully'),
                                             ));
-                                    Navigator.pushNamed(context, 'student');
+                                    Navigator.pushNamed(context, 'student1');
                                   }
                                 } catch (e) {
                                   print(e);

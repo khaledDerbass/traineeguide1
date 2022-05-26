@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 class mySupervisor extends StatefulWidget {
   const mySupervisor({Key? key}) : super(key: key);
-
   @override
   _mySupervisorState createState() => _mySupervisorState();
 }

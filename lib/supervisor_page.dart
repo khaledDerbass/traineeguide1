@@ -98,41 +98,53 @@ class _mySupervisorState1 extends State<mySupervisor1> {
                   ),
                 ],
               ),
+              
               Center(
                 child: Padding(
                     padding:
-                        const EdgeInsets.only(top: 10.0, left: 2, right: 2),
+                        const EdgeInsets.only(top: 80.0),
                     child: result != null
-                        ? DataTable(
-                            columnSpacing: 30.0,
-                            columns: const <DataColumn>[
-                              DataColumn(
-                                label: Text(
-                                  'Name',
-                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                ),
+                        ?  SingleChildScrollView(
+                          child: FittedBox(
+                            child: DataTable(
+                                //columnSpacing: 1.0,
+                                columns: const <DataColumn>[
+                                  DataColumn(
+                                    label: Text(
+                                      'Name',
+                                      style: TextStyle(fontStyle: FontStyle.italic),
+                                    ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
+                                      'Date',
+                                      style: TextStyle(fontStyle: FontStyle.italic),
+                                    ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
+                                      'Time',
+                                      style: TextStyle(fontStyle: FontStyle.italic),
+                                    ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
+                                      'Type',
+                                      style: TextStyle(fontStyle: FontStyle.italic),
+                                    ),
+                                  ),
+                                  DataColumn(
+                                    label: Text(
+                                      'Corporation',
+                                      style: TextStyle(fontStyle: FontStyle.italic),
+                                    ),
+                                  ),
+
+                                ],
+                                rows: getRows(),
                               ),
-                              DataColumn(
-                                label: Text(
-                                  'Date',
-                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                ),
-                              ),
-                              DataColumn(
-                                label: Text(
-                                  'Time',
-                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                ),
-                              ),
-                              DataColumn(
-                                label: Text(
-                                  'Type',
-                                  style: TextStyle(fontStyle: FontStyle.italic),
-                                ),
-                              ),
-                            ],
-                            rows: getRows(),
-                          )
+                          ),
+                        )
                         : const CircularProgressIndicator()),
               ),
             ],
@@ -167,6 +179,8 @@ class _mySupervisorState1 extends State<mySupervisor1> {
                   Text(datalist.entries.elementAt(index).value['time'] ?? "-")),
               DataCell(
                   Text(datalist.entries.elementAt(index).value['type'] ?? "-")),
+          DataCell(
+              Text(datalist.entries.elementAt(index).value['site'] ?? "-")),
             ]));
   }
 }

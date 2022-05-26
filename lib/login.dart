@@ -21,12 +21,6 @@ class _myLoginState extends State<myLogin> {
   final databaseReference = FirebaseDatabase.instance.reference();
   bool showSpinner = false;
 
-/*
-  Future<FirebaseApp> _initializeFirbase() async{
-    FirebaseApp firebasApp = await Firebase.initializeApp();
-    return firebasApp;
-  }
-*/
   @override
   void initState() {
     super.initState();

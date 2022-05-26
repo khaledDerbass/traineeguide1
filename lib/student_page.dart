@@ -20,7 +20,7 @@ class _myStudentState extends State<myStudent> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   static double lat = 0.0;
   static double lng = 0.0;
-
+  var userSite = null;
   final CHECK_IN = "CHECK_IN";
   final CHECK_OUT = "CHECK_OUT";
   String lastTransactionType = "";
@@ -45,6 +45,7 @@ class _myStudentState extends State<myStudent> {
             ":" +
             DateTime.now().minute.toString(),
         'studentID': auth.currentUser!.email,
+        'site':'Al al-Bayt University',
         'location': {
           'lat': lat,
           'lng': lng,
@@ -89,6 +90,7 @@ class _myStudentState extends State<myStudent> {
             "-" +
             DateTime.now().year.toString()),
         'studentID': auth.currentUser!.email,
+        'site':'Al al-Bayt University',
         'location': {
           'lat': lat,
           'lng': lng,
@@ -111,7 +113,18 @@ class _myStudentState extends State<myStudent> {
               ));
     }
   }
-
+  getStudentInfo(){
+    databaseReference
+        .child("Users")
+        .child(auth.currentUser!.uid)
+        .limitToLast(1)
+        .once()
+        .then((DataSnapshot snapshot) {
+              setState(() {
+                userSite = snapshot.value.entries.elementAt(0).value['site'];
+              });
+          });
+  }
   getLastUserTransaction() {
     databaseReference
         .child("TransactionsHistory")
@@ -168,6 +181,7 @@ class _myStudentState extends State<myStudent> {
     setState(() {
       getLocation();
       getLastUserTransaction();
+      getStudentInfo();
     });
   }
 
