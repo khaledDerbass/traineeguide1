@@ -25,6 +25,7 @@ class _resetPasswordState extends State<resetPassword> {
         ),
         child: Scaffold(
           appBar: AppBar(
+
               elevation: null,
               backgroundColor: Colors.transparent,
               leading: TextButton(
