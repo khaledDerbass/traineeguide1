@@ -95,38 +95,4 @@ class _SplashscreenState extends State<Splashscreen> {
   }
 
 }*/
-/*
- MaterialApp(
-
-      debugShowCheckedModeBanner: false,
-      initialRoute: 'login',
-      title: 'Trainee Guide',
-      home: SplashScreen(
-          seconds: 3,
-          navigateAfterSeconds:'login',
-          title: new Text(
-              'Trainee Guide',
-              style: new TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.0,
-                  color: Colors.white),
-          ),
-          image: Image.asset('assets/logo.png'),
-          photoSize: 100.0,
-          backgroundColor: Colors.white,
-          styleTextUnderTheLoader: new TextStyle(),
-          loaderColor: Colors.lightGreen
-      ),
-      routes: {
-      'login': (context) => myLogin(),
-      'register': (context) => myRegister(),
-      'forgot': (context) => resetPassword(),
-      'student': (context) => myStudent(),
-      'student1': (context) => myStudent1(),
-      'supervisor': (context) => mySupervisor(),
-      'supervisor1': (context) => mySupervisor1(),
-      }));
-
-}
-*/
 

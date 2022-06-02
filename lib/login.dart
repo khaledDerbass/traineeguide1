@@ -40,20 +40,20 @@ class _myLoginState extends State<myLogin> {
         ),
         child: Scaffold(
           backgroundColor: Colors.transparent,
+          resizeToAvoidBottomInset : false,
           body: Stack(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
-                      padding: EdgeInsets.all(15.0),
+                      padding: EdgeInsets.all(45.0),
                       child: Image.asset('assets/logo.png'),
                       height: 300,
                       width: 350),
                 ],
               ),
-              SingleChildScrollView(
-                child: Container(
+                 Container(
                   padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height * 0.35,
                     left: 70,
@@ -71,7 +71,7 @@ class _myLoginState extends State<myLogin> {
                           decoration: InputDecoration(
                             hintText: 'Enter your email',
                           )),
-                      SizedBox(height: 30.0),
+                      SizedBox(height: 20.0),
                       TextFormField(
                         obscureText: true,
                         textAlign: TextAlign.center,
@@ -122,7 +122,7 @@ class _myLoginState extends State<myLogin> {
                                       builder: (_) => const AlertDialog(
                                             title: Text('Alert'),
                                             content:
-                                                Text('Wrong Email Or Password'),
+                                                Text('Email or Password is incorrect'),
                                           ));
                                 }
                                 setState(() {
@@ -170,7 +170,7 @@ class _myLoginState extends State<myLogin> {
                     ],
                   ),
                 ),
-              ),
+
             ],
           ),
         ),

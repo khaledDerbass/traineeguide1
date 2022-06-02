@@ -13,6 +13,7 @@ final _auth = FirebaseAuth.instance;
 
 class _myRegisterState extends State<myRegister> {
   late String email;
+  late String username;
   late String password;
   bool showSpinner = false;
   final databaseReference = FirebaseDatabase.instance.reference();
@@ -80,8 +81,11 @@ class _myRegisterState extends State<myRegister> {
                   child: Column(
                     children: [
                       TextField(
-
                         textAlign: TextAlign.center,
+                        onChanged: (value) {
+                          username = value;
+                          //Do something with the user input.
+                        },
                         decoration: InputDecoration(
                           hintText: 'Username',
                         ),
@@ -90,13 +94,13 @@ class _myRegisterState extends State<myRegister> {
                       TextField(
                         keyboardType: TextInputType.emailAddress,
                         textAlign: TextAlign.center,
+                        decoration: InputDecoration(
+                          hintText: 'Email',
+                        ),
                         onChanged: (value) {
                           email = value;
                           //Do something with the user input.
                         },
-                        decoration: InputDecoration(
-                          hintText: 'Email',
-                        ),
                       ),
                       SizedBox(height: 30.0),
                       TextField(
@@ -135,6 +139,16 @@ class _myRegisterState extends State<myRegister> {
                             });
                           }),
                       SizedBox(height: 30.0),
+                      TextField(
+                        textAlign: TextAlign.center,
+                        onChanged: (value) {
+                          //Do something with the user input.
+                        },
+                        decoration: InputDecoration(
+                          hintText: 'OR enter company name',
+                        ),
+                      ),
+                      SizedBox(height: 30.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -163,6 +177,7 @@ class _myRegisterState extends State<myRegister> {
                                       'email': email,
                                       'password': password,
                                       'site':dropdownvalue,
+                                      'username' : username,
                                     });
 
                                     showDialog(

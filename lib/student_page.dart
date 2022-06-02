@@ -21,6 +21,7 @@ class _myStudentState extends State<myStudent> {
   static double lat = 0.0;
   static double lng = 0.0;
   var userSite = null;
+  var username = null;
   final CHECK_IN = "CHECK_IN";
   final CHECK_OUT = "CHECK_OUT";
   String lastTransactionType = "";
@@ -44,7 +45,7 @@ class _myStudentState extends State<myStudent> {
         'time': DateTime.now().hour.toString() +
             ":" +
             DateTime.now().minute.toString(),
-        'studentID': auth.currentUser!.email,
+        'username': username,
         'site':'Al al-Bayt University',
         'location': {
           'lat': lat,
@@ -89,7 +90,7 @@ class _myStudentState extends State<myStudent> {
             DateTime.now().month.toString() +
             "-" +
             DateTime.now().year.toString()),
-        'studentID': auth.currentUser!.email,
+        'username': username,
         'site':'Al al-Bayt University',
         'location': {
           'lat': lat,
@@ -121,7 +122,8 @@ class _myStudentState extends State<myStudent> {
         .once()
         .then((DataSnapshot snapshot) {
               setState(() {
-                userSite = snapshot.value.entries.elementAt(0).value['site'];
+                username = snapshot.value['username'];
+                debugPrint(username);
               });
           });
   }
@@ -179,9 +181,10 @@ class _myStudentState extends State<myStudent> {
   void initState() {
     super.initState();
     setState(() {
+      getStudentInfo();
       getLocation();
       getLastUserTransaction();
-      getStudentInfo();
+
     });
   }
 

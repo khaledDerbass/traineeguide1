@@ -162,16 +162,17 @@ class _mySupervisorState1 extends State<mySupervisor1> {
       print(list.entries.elementAt(i).value);
       datalist.addAll(list.entries.elementAt(i).value);
     }
+
     return List<DataRow>.generate(
         datalist.length,
         (index) => DataRow(cells: [
               DataCell(Text(
-                  datalist.entries.elementAt(index).value['studentID'] != null
+                  datalist.entries.elementAt(index).value['username'] != null
                       ? datalist.entries
                           .elementAt(index)
-                          .value['studentID']
+                          .value['username']
                           .toString()
-                          .substring(0, 8)
+
                       : "-")),
               DataCell(
                   Text(datalist.entries.elementAt(index).value['Date'] ?? "-")),
@@ -182,5 +183,6 @@ class _mySupervisorState1 extends State<mySupervisor1> {
           DataCell(
               Text(datalist.entries.elementAt(index).value['site'] ?? "-")),
             ]));
+
   }
 }
